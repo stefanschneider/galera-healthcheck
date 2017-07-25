@@ -109,6 +109,10 @@ func (m *MonitClient) startService(startMode string, sstDisabled bool) (string, 
 }
 
 func (m *MonitClient) StopService(req *http.Request) (string, error) {
+	err := m.runServiceCmd("unmonitor")
+	if err != nil {
+		return "", err
+	}
 	err := m.runServiceCmd("stop")
 	msg := ""
 	if err == nil {
